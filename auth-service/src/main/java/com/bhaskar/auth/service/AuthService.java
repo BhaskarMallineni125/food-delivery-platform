@@ -1,8 +1,12 @@
 package com.bhaskar.auth.service;
 
+import com.bhaskar.auth.dto.AuthResponse;
+import com.bhaskar.auth.dto.LoginRequest;
 import com.bhaskar.auth.dto.RegisterRequest;
 
 public interface AuthService {
 
-    String register(RegisterRequest request);
+    AuthResponse register(RegisterRequest request);
+
+    AuthResponse login(LoginRequest request);
 }

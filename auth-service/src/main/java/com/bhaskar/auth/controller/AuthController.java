@@ -1,5 +1,7 @@
 package com.bhaskar.auth.controller;
 
+import com.bhaskar.auth.dto.AuthResponse;
+import com.bhaskar.auth.dto.LoginRequest;
 import com.bhaskar.auth.dto.RegisterRequest;
 import com.bhaskar.auth.service.AuthService;
 import jakarta.validation.Valid;
@@ -18,7 +20,14 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping("/register")
-    public ResponseEntity<String> register(@Valid @RequestBody RegisterRequest request){
+    public ResponseEntity<AuthResponse> register(@Valid @RequestBody RegisterRequest request){
         return ResponseEntity.ok(authService.register(request));
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<AuthResponse> login(
+            @Valid @RequestBody LoginRequest request) {
+
+        return ResponseEntity.ok(authService.login(request));
     }
 }
