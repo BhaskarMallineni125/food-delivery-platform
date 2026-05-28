@@ -2,7 +2,6 @@ package com.bhaskar.auth.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.lang.Nullable;
 
 @Entity
 @Table(name = "users")
@@ -25,4 +24,8 @@ public class User {
 
     @Column(nullable = false)
     private String password;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Role role;
 }

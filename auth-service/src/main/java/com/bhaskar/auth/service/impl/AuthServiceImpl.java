@@ -3,6 +3,7 @@ package com.bhaskar.auth.service.impl;
 import com.bhaskar.auth.dto.AuthResponse;
 import com.bhaskar.auth.dto.LoginRequest;
 import com.bhaskar.auth.dto.RegisterRequest;
+import com.bhaskar.auth.entity.Role;
 import com.bhaskar.auth.entity.User;
 import com.bhaskar.auth.repository.UserRepository;
 import com.bhaskar.auth.security.JwtService;
@@ -32,6 +33,7 @@ public class AuthServiceImpl implements AuthService {
                 .name(request.getName())
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
+                .role(Role.CUSTOMER)
                 .build();
         userRepository.save(user);
 
