@@ -5,6 +5,8 @@ import com.bhaskar.auth.dto.LoginRequest;
 import com.bhaskar.auth.dto.RegisterRequest;
 import com.bhaskar.auth.entity.Role;
 import com.bhaskar.auth.entity.User;
+import com.bhaskar.auth.exception.InvalidCredentialsException;
+import com.bhaskar.auth.exception.ResourceAlreadyExistsException;
 import com.bhaskar.auth.repository.UserRepository;
 import com.bhaskar.auth.security.JwtService;
 import com.bhaskar.auth.service.AuthService;
@@ -26,7 +28,7 @@ public class AuthServiceImpl implements AuthService {
     public AuthResponse register(RegisterRequest request){
 
         if (userRepository.findByEmail(request.getEmail()).isPresent()) {
-            throw new RuntimeException("Email already exists");
+            throw new ResourceAlreadyExistsException("Email already exists");
         }
 
         User user = User.builder()
@@ -48,7 +50,7 @@ public class AuthServiceImpl implements AuthService {
     public AuthResponse login(LoginRequest request) {
 
         User user = userRepository.findByEmail(request.getEmail())
-                .orElseThrow(() -> new RuntimeException("Invalid credentials"));
+                .orElseThrow(() -> new InvalidCredentialsException("Invalid credentials"));
 
         boolean matches = passwordEncoder.matches(
                 request.getPassword(),
@@ -56,7 +58,7 @@ public class AuthServiceImpl implements AuthService {
         );
 
         if (!matches) {
-            throw new RuntimeException("Invalid credentials");
+            throw new InvalidCredentialsException("Invalid credentials");
         }
 
         String token = jwtService.generateToken(user.getEmail());
