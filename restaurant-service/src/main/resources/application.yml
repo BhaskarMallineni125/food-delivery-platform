@@ -1,0 +1,27 @@
+spring:
+  application:
+    name: restaurant-service
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/restaurant_db
+    username: postgres
+    password: bHASKI@2001
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+
+    show-sql: true
+
+    properties:
+      hibernate:
+        format_sql: true
+
+server:
+  port: 8082
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
