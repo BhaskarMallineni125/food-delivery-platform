@@ -33,7 +33,6 @@ public class JwtAuthenticationFilter
             org.springframework.web.server.ServerWebExchange exchange,
             org.springframework.cloud.gateway.filter.GatewayFilterChain chain
     ) {
-
         String path =
                 exchange.getRequest()
                         .getURI()

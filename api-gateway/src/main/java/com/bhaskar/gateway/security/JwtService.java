@@ -11,7 +11,7 @@ import java.security.Key;
 public class JwtService {
 
     private static final String SECRET =
-            "myverysecuresecretkeymyverysecuresecretkey12345";
+            "mysecretkeymysecretkeymysecretkey1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
     private final Key key =
             Keys.hmacShaKeyFor(SECRET.getBytes());

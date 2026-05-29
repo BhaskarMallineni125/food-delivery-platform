@@ -15,7 +15,7 @@ import java.util.function.Function;
 public class JwtService {
 
     private static final String SECRET_KEY =
-            "myverysecuresecretkeymyverysecuresecretkey12345";
+            "mysecretkeymysecretkeymysecretkey1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
     public String generateToken(String email) {
 
