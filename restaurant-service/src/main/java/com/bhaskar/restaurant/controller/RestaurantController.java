@@ -2,7 +2,6 @@ package com.bhaskar.restaurant.controller;
 
 import com.bhaskar.restaurant.dto.CreateRestaurantRequest;
 import com.bhaskar.restaurant.dto.RestaurantResponse;
-import com.bhaskar.restaurant.entity.Restaurant;
 import com.bhaskar.restaurant.service.RestaurantService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -20,9 +19,8 @@ public class RestaurantController {
     private final RestaurantService restaurantService;
 
     @PostMapping
-    public ResponseEntity<Restaurant> createRestaurant(
-            @Valid @RequestBody
-            CreateRestaurantRequest request
+    public ResponseEntity<RestaurantResponse> createRestaurant(
+            @Valid @RequestBody CreateRestaurantRequest request
     ) {
 
         return ResponseEntity.ok(
@@ -34,23 +32,30 @@ public class RestaurantController {
     public ResponseEntity<Page<RestaurantResponse>>
     getRestaurants(
 
-            @RequestParam(name = "page", defaultValue = "0")
+            @RequestParam(
+                    name = "page",
+                    defaultValue = "0"
+            )
             int page,
 
-            @RequestParam(name = "size", defaultValue = "10")
+            @RequestParam(
+                    name = "size",
+                    defaultValue = "10"
+            )
             int size
     ) {
 
         return ResponseEntity.ok(
-                restaurantService
-                        .getRestaurants(page, size)
+                restaurantService.getRestaurants(page, size)
         );
     }
 
     @GetMapping("/cuisine/{cuisine}")
-    public ResponseEntity<List<Restaurant>>
+    public ResponseEntity<List<RestaurantResponse>>
     getByCuisine(
-            @PathVariable("cuisine") String cuisine
+
+            @PathVariable("cuisine")
+            String cuisine
     ) {
 
         return ResponseEntity.ok(
@@ -60,13 +65,15 @@ public class RestaurantController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<List<RestaurantResponse>> search(
-            @RequestParam("keyword") String keyword
+    public ResponseEntity<List<RestaurantResponse>>
+    search(
+
+            @RequestParam("keyword")
+            String keyword
     ) {
 
         return ResponseEntity.ok(
                 restaurantService.search(keyword)
         );
     }
-
 }

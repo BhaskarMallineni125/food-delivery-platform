@@ -3,9 +3,11 @@ package com.bhaskar.restaurant.dto;
 import lombok.Builder;
 import lombok.Data;
 
+import java.io.Serializable;
+
 @Data
 @Builder
-public class RestaurantResponse {
+public class RestaurantResponse implements Serializable {
 
     private Long id;
 

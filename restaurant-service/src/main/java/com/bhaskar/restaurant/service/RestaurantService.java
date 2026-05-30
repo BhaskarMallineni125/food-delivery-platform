@@ -9,17 +9,20 @@ import java.util.List;
 
 public interface RestaurantService {
 
-    Restaurant createRestaurant(CreateRestaurantRequest request);
+    RestaurantResponse createRestaurant(
+            CreateRestaurantRequest request
+    );
 
-    List<Restaurant> getAllRestaurants();
-
-    List<Restaurant> getRestaurantsByCuisine(String cuisine);
+    List<RestaurantResponse> getRestaurantsByCuisine(
+            String cuisine
+    );
 
     Page<RestaurantResponse> getRestaurants(
             int page,
             int size
     );
 
-    List<RestaurantResponse> search(String keyword);
-
+    List<RestaurantResponse> search(
+            String keyword
+    );
 }
