@@ -6,8 +6,10 @@ import com.bhaskar.order.dto.OrderResponse;
 import com.bhaskar.order.entity.Order;
 import com.bhaskar.order.entity.OrderItem;
 import com.bhaskar.order.entity.OrderStatus;
+import com.bhaskar.order.event.OrderCreatedEvent;
 import com.bhaskar.order.exception.OrderNotFoundException;
 import com.bhaskar.order.mapper.OrderMapper;
+import com.bhaskar.order.producer.OrderEventProducer;
 import com.bhaskar.order.repository.OrderRepository;
 import com.bhaskar.order.service.OrderService;
 import jakarta.transaction.Transactional;
@@ -27,6 +29,8 @@ public class OrderServiceImpl
         implements OrderService {
 
     private final OrderRepository orderRepository;
+
+    private final OrderEventProducer orderEventProducer;
 
     @Override
     @Transactional
@@ -80,8 +84,26 @@ public class OrderServiceImpl
                                 )
                 );
 
-        Order savedOrder =
-                orderRepository.save(order);
+        Order savedOrder = orderRepository.save(order);
+
+        OrderCreatedEvent event =
+                OrderCreatedEvent.builder()
+                        .orderId(
+                                savedOrder.getId()
+                        )
+                        .customerId(
+                                savedOrder.getCustomerId()
+                        )
+                        .restaurantId(
+                                savedOrder.getRestaurantId()
+                        )
+                        .totalAmount(
+                                savedOrder.getTotalAmount()
+                        )
+                        .build();
+
+        orderEventProducer
+                .publishOrderCreatedEvent(event);
 
         return OrderMapper.toResponse(savedOrder);
     }
